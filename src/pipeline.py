@@ -3,7 +3,7 @@ from src.config import Config
 from src.downloaders.instagram import InstagramDownloader
 from src.extractors.audio import extract_audio
 from src.extractors.frames import extract_and_compress_frames
-from src.processors.transcribe import transcribe_audio
+from src.processors.audio import transcribe_audio
 from src.summarizers.multimodal import generate_multimodal_summary
 from src.summarizers.rag import gemini_summarize_with_rag
 import os

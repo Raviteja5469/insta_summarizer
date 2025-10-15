@@ -2,7 +2,7 @@ import moviepy
 from src.config import logger
 
 def extract_audio(video_path: str) -> str:
-    audio_path = f"{video_path}.wav"
+    audio_path = f"{video_path.split('.')[0]}.wav"
     try:
         clip = moviepy.VideoFileClip(video_path)
         clip.audio.write_audiofile(audio_path, codec='pcm_s16le', fps=44100, logger=None)
