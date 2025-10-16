@@ -4,6 +4,7 @@ import torch
 from src.config import logger
 from typing import Optional, Dict
 from pydub import AudioSegment
+from pydub.silence import detect_nonsilent
 
 class AudioProcessor:
     """
@@ -29,6 +30,19 @@ class AudioProcessor:
             self.models[model_size] = whisper.load_model(model_size, device=self.device)
             logger.info(f"Whisper model '{model_size}' loaded successfully.")
         return self.models[model_size]
+    
+    def _estimate_speech_ratio(self, audio_path: str, silence_thresh: float = -35.0, min_silence_len: int = 500) -> float:
+        try:
+            audio = AudioSegment.from_file(audio_path)
+            nonsilent_ranges = detect_nonsilent(audio, min_silence_len=min_silence_len, silence_thresh=silence_thresh)
+            speech_duration_ms = sum(end - start for start, end in nonsilent_ranges)
+            total_duration_ms = len(audio)
+            ratio = speech_duration_ms / total_duration_ms if total_duration_ms > 0 else 0.0
+            logger.info(f"Estimated speech ratio (pre-transcription): {ratio:.2f}")
+            return ratio
+        except Exception as e:
+            logger.error(f"Error estimating speech ratio: {e}")
+            return 0.0
 
     def _has_speech(self, audio_path: str, threshold: float = -35.0) -> bool:
         """
@@ -59,7 +73,12 @@ class AudioProcessor:
         if not self._has_speech(audio_path):
             logger.warning("No clear speech detected. Skipping transcription.")
             return {"transcript": None, "speech_ratio": 0.0}
-
+        
+        speech_ratio = self._estimate_speech_ratio(audio_path)
+        if speech_ratio < 0.2:
+            logger.info("Low speech ratio detected, skipping transcription.")
+            return {"transcript": None, "speech_ratio": speech_ratio}
+        
         try:
             # Step 1: Load small/base model for language detection
             detection_model = self._get_model("base")

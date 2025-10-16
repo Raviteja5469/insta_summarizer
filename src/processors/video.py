@@ -17,8 +17,13 @@ class VideoProcessor:
 
     def __init__(self):
         """Initializes the Gemini model client."""
-        self.model = genai.GenerativeModel("gemini-2.0-flash-lite")
-        logger.info("Initialized video processor with gemini-2.0-flash-lite.")
+        try:
+            genai.configure(api_key=Config.GOOGLE_API_KEY)
+            self.model = genai.GenerativeModel("gemini-2.0-flash-lite")
+            logger.info("Initialized video processor with gemini-2.0-flash-lite.")
+        except Exception as e:
+            logger.error(f"Failed to configure Google Gemini client: {e}")
+            self.model = None
 
     def _extract_smart_keyframes(self, video_path: str, threshold: float = 5.0, max_frames: int = 10) -> List[np.ndarray]:
         frames = []
