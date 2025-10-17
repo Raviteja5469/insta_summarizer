@@ -9,12 +9,13 @@ class Config:
     INSTA_USERNAME = os.getenv("INSTA_USERNAME")
     INSTA_PASSWORD = os.getenv("INSTA_PASSWORD")
     GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+    MONGO_URI = os.getenv("MONGO_URI")
     TEMP_DIR = "temp_files"  # For videos, audio, frames
     LOG_LEVEL = logging.DEBUG
 
     @staticmethod
     def validate():
-        if not all([Config.INSTA_USERNAME, Config.INSTA_PASSWORD, Config.GOOGLE_API_KEY]):
+        if not all([Config.INSTA_USERNAME, Config.INSTA_PASSWORD, Config.GOOGLE_API_KEY, Config.MONGO_URI]):
             raise ValueError("Missing required env vars in .env")
 
 # Setup logging
