@@ -1,14 +1,15 @@
 from pydantic import BaseModel, Field
 from typing import Optional, Dict, Any
 from datetime import datetime
-
+    
 class ChannelSchema(BaseModel):
     _id: str  # The channel's unique username
     platform: str = "instagram"
     last_checked_at: Optional[datetime] = None
+    last_fetched_shortcode: Optional[str] = None
     fetch_frequency_hours: int = 6
     is_active: bool = True
-    priority: int = 1 # Lower is higher priority
+    priority: int = 1
 
 class ProcessingMetadata(BaseModel):
     worker_id: Optional[str] = None

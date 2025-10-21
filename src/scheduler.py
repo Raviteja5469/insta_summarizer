@@ -1,5 +1,5 @@
 from apscheduler.schedulers.blocking import BlockingScheduler
-from src.discoverer import Discoverer  # We will create this next
+from contentFetchers.discoverer import Discoverer  # We will create this next
 from src.worker import Worker
 from src.config import logger
 

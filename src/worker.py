@@ -1,6 +1,6 @@
 import time
 import os
-from src.database import Database
+from src.database.db import Database
 from src.pipeline import run_pipeline
 from src.extractors.report_parser import parse_report # <-- NEW IMPORT
 from src.config import logger

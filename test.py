@@ -18,8 +18,8 @@ from src.extractors.audio import extract_audio
 # image_summary = imageProcessor.process(download_result["folder_path"])
 # print(f"Image Summary: {image_summary}")
 
-audio_path = extract_audio("temp_files/post_DNV0iKfie8O/DNV0iKfie8O_2.mp4")
-print(f"Audio path: {audio_path}")
+# audio_path = extract_audio("temp_files/post_DNV0iKfie8O/DNV0iKfie8O_2.mp4")
+# print(f"Audio path: {audio_path}")
 
 # audio_result = audio_processor.process("temp_files/reel_DPeG4jdjEAA/DPeG4jdjEAA.wav")
 # print(f"Transcript: {audio_result}")
@@ -48,3 +48,5 @@ print(f"Audio path: {audio_path}")
   ]
 }
 '''
+
+
