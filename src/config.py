@@ -11,7 +11,7 @@ class Config:
     GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
     MONGO_URI = os.getenv("MONGO_URI")
     TEMP_DIR = "temp_files"  # For videos, audio, frames
-    LOG_LEVEL = logging.DEBUG
+    LOG_LEVEL = logging.INFO
 
     @staticmethod
     def validate():

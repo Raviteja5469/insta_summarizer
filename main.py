@@ -1,5 +1,6 @@
 # from src.pipeline import run_pipeline
 from src.config import Config, logger
+import time
 import argparse
 # import src.scheduler as scheduler
 from src.contentFetchers import bootstrap_channels
@@ -32,4 +33,6 @@ if __name__ == "__main__":
 
     usernames = ["theaifield"]
     for user in usernames:
-        bootstrap_channels.bootstrap_channel(user)
+        bootstrap_channels.bootstrap_channel(user, limit=50)
+        logger.info(f"Completed process for {user}. Waiting 30 seconds before next run.")
+        time.sleep(30)
