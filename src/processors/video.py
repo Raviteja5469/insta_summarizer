@@ -1,5 +1,3 @@
-# Location: src/processors/visual.py
-
 import cv2
 import numpy as np
 import google.generativeai as genai

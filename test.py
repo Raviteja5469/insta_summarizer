@@ -1,6 +1,6 @@
 # Test script
 # from src.downloaders.instagram import InstagramDownloader
-from src.extractors.audio import extract_audio
+# from src.extractors.audio import extract_audio
 # from src.processors.audio import AudioProcessor
 # from src.processors.video import VideoProcessor
 # from src.processors.evaluator import Evaluator
@@ -48,5 +48,3 @@ from src.extractors.audio import extract_audio
   ]
 }
 '''
-
-

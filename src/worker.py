@@ -1,11 +1,14 @@
 import time
 import os
 from src.database.db import Database
-from src.pipeline import run_pipeline
-from src.extractors.report_parser import parse_report # <-- NEW IMPORT
+from src.pipeline import run_pipeline  
+from src.extractors.report_parser import parse_report
 from src.config import logger
 
-class Worker:
+class WorkerService:
+    """
+    The "Factory Worker" service. Processes one 'pending' job at a time.
+    """
     def __init__(self):
         self.db = Database()
         self.worker_id = f"worker_{os.getpid()}"
@@ -25,13 +28,12 @@ class Worker:
         try:
             logger.info(f"⚙️ [{self.worker_id}] Processing job {post_id} for URL: {url}")
 
-            # Step 1: Run the full pipeline to get the final report
-            final_report = run_pipeline(url)
+            # Step 1: Run the full pipeline (THE HEAVY WORK)
+            final_report = run_pipeline(job) 
             
-            # This handles the "skip" case from the downloader
+            # This is great handling for skipping!
             if isinstance(final_report, dict) and final_report.get("status") == "skipped":
-                logger.info(f"⏩ Job {post_id} was skipped by the pipeline. Marking as complete.")
-                # We can complete it with minimal data to prevent it from being picked up again.
+                logger.info(f"⏩ Job {post_id} was skipped. Marking as complete.")
                 metadata = {"worker_id": self.worker_id, "note": "Skipped, already processed."}
                 self.db.complete_item(post_id, "Skipped", final_report, metadata)
                 return
@@ -39,10 +41,10 @@ class Worker:
             if not final_report or not isinstance(final_report, str):
                 raise RuntimeError("Pipeline failed to return a valid summary report string.")
             
-            # Step 2: Parse the report back into structured data
+            # Step 2: Parse the report
             structured_data = parse_report(final_report)
 
-            # Step 3: Record metadata and complete the job in the database
+            # Step 3: Record metadata and complete
             end_time = time.time()
             metadata = {
                 "worker_id": self.worker_id,
@@ -56,9 +58,3 @@ class Worker:
             error_msg = f"Job {post_id} failed: {e}"
             logger.error(f"❌ [{self.worker_id}] {error_msg}", exc_info=True)
             self.db.fail_item(post_id, str(e))
-
-if __name__ == '__main__':
-    logger.info("Running a single worker process for testing.")
-    worker = Worker()
-    worker.run_once()
-    logger.info("Worker test run finished.")

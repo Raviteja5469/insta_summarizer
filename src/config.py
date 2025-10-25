@@ -9,6 +9,7 @@ class Config:
     INSTA_USERNAME = os.getenv("INSTA_USERNAME")
     INSTA_PASSWORD = os.getenv("INSTA_PASSWORD")
     GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+    FORCE_CHECK_ALL = os.getenv("FORCE_CHECK_ALL")
     MONGO_URI = os.getenv("MONGO_URI")
     TEMP_DIR = "temp_files"  # For videos, audio, frames
     LOG_LEVEL = logging.INFO

@@ -3,7 +3,7 @@ import shutil
 from pathlib import Path
 from typing import Dict, Any
 
-from src.downloaders.instagram import InstagramDownloader
+from src.fetchers.instagram import InstagramDownloader
 from src.extractors.audio import extract_audio
 from src.processors.audio import AudioProcessor
 from src.processors.video import VideoProcessor

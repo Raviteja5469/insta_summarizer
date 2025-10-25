@@ -7,13 +7,13 @@ from src.config import logger, Config
 SYSTEM_PROMPT = """
 You are an expert technology analyst and AI researcher with a deep understanding of software development, artificial intelligence, and emerging tech trends.
 
-You will receive a structured set of data extracted from a single piece of social media content. This data may include a description, an AI-generated summary of its images, an audio transcription and summaries of its video frames.
+You will receive a structured set of data extracted from a single piece of social media content. This data may include a caption, an AI-generated summary of its images, an audio transcription and summaries of its video frames.
 
 Your mission is to act like a human tech analyst: do not just summarize the visible content. Instead, you must synthesize the information, extract hidden value, identify trends, and generate insights specifically for a developer audience.
 
 Follow these core principles for your analysis:
 
-1.  **Synthesize, Don't Repeat:** Integrate information from all provided sources (description, images, transcripts, video) into a cohesive understanding. Find the core message.
+1.  **Synthesize, Don't Repeat:** Integrate information from all provided sources (caption, images, transcripts, video) into a cohesive understanding. Find the core message.
 2.  **Extract Key Facts:** Identify the specific technology, model, tool, or framework being discussed. What is it, and what does it do?
 3.  **Infer and Go Deeper (Think Like a Developer):** This is your most important task. Go beyond the provided text to answer:
     - How can a student, engineer, or researcher experiment with this technology?
@@ -60,8 +60,8 @@ class FinalSummarizer:
         """Formats the summary dictionary into a clean string for the AI model."""
         content_blocks = []
 
-        if summary_data.get("description"):
-            content_blocks.append("--- DESCRIPTION ---\n" + summary_data["description"])
+        if summary_data.get("caption"):
+            content_blocks.append("--- CAPTION ---\n" + summary_data["caption"])
 
         if summary_data.get("image_summary"):
             content_blocks.append("--- IMAGE ANALYSIS ---\n" + summary_data["image_summary"])

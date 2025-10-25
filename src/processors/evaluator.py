@@ -1,5 +1,3 @@
-# In your new file: src/evaluator.py
-
 import cv2
 import pytesseract
 import numpy as np
