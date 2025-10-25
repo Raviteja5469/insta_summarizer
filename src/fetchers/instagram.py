@@ -33,7 +33,7 @@ class InstagramDownloader(BaseDownloader):
             shortcode = job_data["_id"]
             content_type = job_data.get("post_type", "post") # Default to "post" if missing
         except KeyError:
-            raise ValueError(f"Job data is missing required fields like '_id'.")
+            raise ValueError("Job data is missing required fields like '_id'.")
         
         # Check if DB already has a path (from a previous failed run)
         if job_data.get("local_media_path"):

@@ -176,10 +176,6 @@ def analyze_channel_info(user_info: User) -> Dict[str, Any]:
         
     return smart_data
 
-# src/services/discoverer_service.py
-
-# --- (Place this near the other helpers) ---
-
 def analyze_post_priority(post_item: ContentItemSchema) -> int:
     """
     Analyzes a newly created ContentItemSchema to adjust its priority
